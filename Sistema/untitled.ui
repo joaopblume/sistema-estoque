@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>649</width>
-    <height>601</height>
+    <width>400</width>
+    <height>199</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,76 +19,71 @@
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>250</x>
-     <y>30</y>
+     <x>130</x>
+     <y>20</y>
      <width>141</width>
-     <height>51</height>
+     <height>31</height>
     </rect>
    </property>
    <property name="font">
     <font>
-     <pointsize>25</pointsize>
-     <weight>75</weight>
-     <bold>true</bold>
+     <pointsize>15</pointsize>
     </font>
    </property>
    <property name="text">
-    <string>Estoque</string>
+    <string>Vender Produto</string>
    </property>
   </widget>
-  <widget class="QTableWidget" name="tableWidget">
+  <widget class="QLabel" name="label_2">
    <property name="geometry">
     <rect>
-     <x>30</x>
+     <x>50</x>
      <y>100</y>
-     <width>581</width>
-     <height>441</height>
+     <width>91</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Quantidade:</string>
+   </property>
+  </widget>
+  <widget class="QSpinBox" name="spinBox">
+   <property name="geometry">
+    <rect>
+     <x>150</x>
+     <y>100</y>
+     <width>71</width>
+     <height>31</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(229, 229, 229);</string>
+    <string notr="true">background-color: rgb(255, 255, 255);</string>
    </property>
   </widget>
   <widget class="QPushButton" name="pushButton">
    <property name="geometry">
     <rect>
-     <x>210</x>
-     <y>560</y>
-     <width>81</width>
+     <x>240</x>
+     <y>100</y>
+     <width>75</width>
      <height>31</height>
     </rect>
    </property>
    <property name="font">
     <font>
-     <pointsize>11</pointsize>
+     <pointsize>10</pointsize>
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(229, 229, 229);</string>
+    <string notr="true">background-color: rgb(255, 255, 255);</string>
    </property>
    <property name="text">
-    <string>Excluir</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="pushButton_2">
-   <property name="geometry">
-    <rect>
-     <x>350</x>
-     <y>560</y>
-     <width>81</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>11</pointsize>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: rgb(229, 229, 229);</string>
-   </property>
-   <property name="text">
-    <string>Vender</string>
+    <string>Confirmar</string>
    </property>
   </widget>
  </widget>

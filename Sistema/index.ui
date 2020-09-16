@@ -98,7 +98,7 @@
      <string notr="true">background-color: rgb(208, 208, 208);</string>
     </property>
     <property name="text">
-     <string>Histórico de Compras</string>
+     <string>Histórico de Vendas</string>
     </property>
    </widget>
   </widget>
