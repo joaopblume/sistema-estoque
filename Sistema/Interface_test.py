@@ -22,25 +22,32 @@ def excluir():
 
 def quantity():
     sell.show()
-
+# captando a quantidade existente do produto no estoque
     linha = storage.tableWidget.currentRow()
     total = int(storage.tableWidget.item(linha, 5).text())
+# define o máximo de itens que pode ser vendido, de acordo com o que há disponível no estoque
     sell.spinBox.setRange(1 , int(total))
 
     sell.pushButton.clicked.connect(confirmar)
 
+# retorna a variável total, para que possa ser usada no escopo da função 'confirmar()'
     return total
     
 
 def confirmar():
 
+# pega o id do produto que vai ser vendido
     linha = storage.tableWidget.currentRow() 
     id = storage.tableWidget.item(linha, 0).text()
 
+# calcula a quantidade no estoque menos a quantidade a ser vendida
     valor = int(sell.spinBox.value())
     resultado = quantity() - valor
+
+# se a quantidade no estoque zerar, o produto é excluido do sistema
     if resultado == 0:
         excluir()
+# senão, é calculado e alterado a quantidade restante do produto na tabela e no banco de dados
     else:
         cursor = banco.cursor()
         comando = f'UPDATE produtos SET quantidade = {resultado} WHERE id = {id}'
@@ -49,6 +56,7 @@ def confirmar():
         storage.tableWidget.setItem(linha, 5, QtWidgets.QTableWidgetItem(str(resultado)))
     
     sell.close()
+# retorna o resultado para que possar ser utilizado na parte de histórico de vendas
     return resultado
 
 
