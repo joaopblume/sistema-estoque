@@ -36,6 +36,17 @@ def quantity():
     return total
 
 
+def pegar_row(key, quantit):
+    row = []
+    cursor = banco.cursor()
+    comando = 'SELECT * FROM produtos'
+    cursor.execute(comando)
+    dados_lidos = cursor.fetchall()
+    for item in dados_lidos[key]:
+        row.append(item)
+    row[5] = quantit
+    return row
+
 def confirmar():
     # pega o id do produto que vai ser vendido
     linha = storage.tableWidget.currentRow()
@@ -44,6 +55,15 @@ def confirmar():
     # calcula a quantidade no estoque menos a quantidade a ser vendida
     valor = int(sell.spinBox.value())
     resultado = quantity() - valor
+
+    # atualiza o banco de dados na tabela vendidos com a quantidade vendida.
+     
+    vendido = pegar_row(linha, valor)
+    cursor = banco.cursor()
+    comando = 'INSERT INTO vendidos (nome, tipo, preco, codigo, quantidade) VALUES (%s, %s, %s, %s, %s)'
+    dados = (vendido[1], vendido[2], str(vendido[3]), str(vendido[4]), str(vendido[5]))
+    cursor.execute(comando, dados)
+    banco.commit()
 
     # se a quantidade no estoque zerar, o produto é excluido do sistema
     if resultado == 0:
@@ -57,8 +77,35 @@ def confirmar():
         storage.tableWidget.setItem(linha, 5, QtWidgets.QTableWidgetItem(str(resultado)))
 
     sell.close()
-    # retorna o resultado para que possar ser utilizado na parte de histórico de vendas
-    return resultado
+
+
+
+def hist():
+    historic.show()
+
+    cursor = banco.cursor()
+    comando = 'SELECT * FROM vendidos'
+    cursor.execute(comando)
+    data = cursor.fetchall()
+
+
+    historic.tableWidget.setRowCount(len(data))
+    historic.tableWidget.setColumnCount(6)
+
+    widths = [30, 140, 90, 80, 80, 80]
+    for i, width in enumerate(widths):
+        historic.tableWidget.setColumnWidth(i, width)
+
+    values = ['id', 'Nome', 'Tipo', 'Preço', 'Código', 'Quantidade']
+    historic.tableWidget.setHorizontalHeaderLabels(values)
+
+    historic.tableWidget.setSelectionBehavior(QtWidgets.QTableView.SelectRows)
+
+    for i in range(0, len(data)):
+        for j in range(0, 6):
+            historic.tableWidget.setItem(i, j, QtWidgets.QTableWidgetItem(str(data[i][j])))
+    
+    historic.pushButton.clicked.connect(excluir)
 
 
 def registrar():
@@ -128,10 +175,12 @@ index = uic.loadUi('index.ui')
 new = uic.loadUi('novo_instrumento.ui')
 storage = uic.loadUi('estoque.ui')
 sell = uic.loadUi('vender.ui')
+historic = uic.loadUi('historico.ui')
 
 # definindo funções para os botões de index.ui
 index.pushButton.clicked.connect(novo_instrumento)
 index.pushButton_2.clicked.connect(estoque)
+index.pushButton_3.clicked.connect(hist)
 
 index.show()
 app.exec()
