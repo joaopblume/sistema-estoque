@@ -47,6 +47,7 @@ def pegar_row(key, quantit):
     row[5] = quantit
     return row
 
+
 def confirmar():
     # pega o id do produto que vai ser vendido
     linha = storage.tableWidget.currentRow()
@@ -57,7 +58,7 @@ def confirmar():
     resultado = quantity() - valor
 
     # atualiza o banco de dados na tabela vendidos com a quantidade vendida.
-     
+
     vendido = pegar_row(linha, valor)
     cursor = banco.cursor()
     comando = 'INSERT INTO vendidos (nome, tipo, preco, codigo, quantidade) VALUES (%s, %s, %s, %s, %s)'
@@ -79,7 +80,6 @@ def confirmar():
     sell.close()
 
 
-
 def hist():
     historic.show()
 
@@ -87,7 +87,6 @@ def hist():
     comando = 'SELECT * FROM vendidos'
     cursor.execute(comando)
     data = cursor.fetchall()
-
 
     historic.tableWidget.setRowCount(len(data))
     historic.tableWidget.setColumnCount(6)
@@ -104,7 +103,7 @@ def hist():
     for i in range(0, len(data)):
         for j in range(0, 6):
             historic.tableWidget.setItem(i, j, QtWidgets.QTableWidgetItem(str(data[i][j])))
-    
+
     historic.pushButton.clicked.connect(excluir)
 
 
@@ -183,4 +182,7 @@ index.pushButton_2.clicked.connect(estoque)
 index.pushButton_3.clicked.connect(hist)
 
 index.show()
-app.exec()
+try:
+    app.exec()
+except:
+    print('error')
